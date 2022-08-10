@@ -48,6 +48,7 @@ const Cell: FC<Props> = (props) => {
     {
       fontWeight: isHeader ? 'bold' : 'normal',
       width: calculateCellWidth,
+      fontSize: isHeader ? 18 : 15,
     },
     labelStyle,
   ])
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
   label: {
     color: COLORS?.mineShaft,
     flex: 1,
-    fontSize: 20,
     paddingHorizontal: 8,
     paddingVertical: 5,
   },
