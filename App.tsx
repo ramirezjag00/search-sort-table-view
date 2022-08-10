@@ -1,27 +1,14 @@
-import { SafeAreaView, StyleSheet, Text } from 'react-native'
+import { FC } from 'react'
 
-import { COLORS, CONTAINERS } from '@themes'
+import { DeviceContextProvider } from '@contexts/DeviceContext'
+import Home from '@screens/Home'
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>
-        React Native Template Typescript - RN v0.69.1
-      </Text>
-    </SafeAreaView>
+    <DeviceContextProvider>
+      <Home />
+    </DeviceContextProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    ...CONTAINERS?.centerCenter,
-    backgroundColor: COLORS?.wildSand,
-  },
-  title: {
-    color: COLORS?.mineShaft,
-    fontSize: 40,
-    textAlign: 'center',
-  },
-})
 
 export default App
