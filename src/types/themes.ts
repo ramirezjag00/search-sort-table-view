@@ -15,4 +15,9 @@ interface ThemesInterface {
   CONTAINERS: StyleSheetInterface
 }
 
-export type { ColorsInterface, ThemesInterface, StyleSheetInterface }
+export type {
+  ColorsInterface,
+  ThemesInterface,
+  StyleSheetInterface,
+  StylesType,
+}
