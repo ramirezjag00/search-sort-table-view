@@ -1,18 +1,19 @@
-import { FC } from 'react'
-import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
+import { FC, ReactElement } from 'react'
+import { FlatList, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 
 import Cell from './Cell'
-import RowData from '@customtypes/row'
-import User from '@customtypes/user'
+import { TableData } from '@customtypes/row'
 import { COLORS } from '@themes'
 
 interface Props {
   isHeader: boolean
-  data: User | RowData
+  data: TableData
   cellContainerStyle?: ViewStyle
   cellLabelStyle?: TextStyle
   rowContainerStyle?: ViewStyle
 }
+
+const keyExtractor = (item: string, index: number): string => `${item}-${index}`
 
 const Row: FC<Props> = (props) => {
   const {
@@ -29,20 +30,28 @@ const Row: FC<Props> = (props) => {
     rowContainerStyle,
   ])
 
+  const renderItem = ({ item }: { item: string }): ReactElement => {
+    return (
+      <Cell
+        containerStyle={cellContainerStyle}
+        isHeader={isHeader}
+        label={data[item as keyof TableData]}
+        labelStyle={cellLabelStyle}
+        numberOfColumns={columns?.length}
+      />
+    )
+  }
+
   return (
     <View style={rowStyles}>
-      {columns?.map((column: string) => {
-        return (
-          <Cell
-            key={column}
-            containerStyle={cellContainerStyle}
-            isHeader={isHeader}
-            label={data[column as keyof User]}
-            labelStyle={cellLabelStyle}
-            numberOfColumns={columns?.length}
-          />
-        )
-      })}
+      <FlatList
+        data={columns}
+        horizontal={true}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        scrollEnabled={false}
+        scrollEventThrottle={16}
+      />
     </View>
   )
 }
@@ -51,8 +60,6 @@ const styles = StyleSheet.create({
   row: {
     borderBottomColor: COLORS?.mineShaft,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
   },
 })
 
