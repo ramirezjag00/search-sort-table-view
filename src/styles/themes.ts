@@ -8,6 +8,7 @@ import type {
 
 // naming convention using vs-code extension: "Name that color"
 const COLORS: ColorsInterface = {
+  white: '#ffffff',
   wildSand: '#f7f7f7',
   mineShaft: '#202020',
 }
