@@ -5,6 +5,8 @@ import {
   CELL_LANDSCAPE_MULTIPLIER,
   CELL_MIN_COLUMNS,
   CELL_PORTRAIT_MULTIPLIER,
+  SAFE_AREA_PORTRAIT_WIDTH,
+  TABLE_MARGIN_HORIZONTAL,
 } from '@constants/cell'
 import { useDeviceContext } from '@contexts/DeviceContext'
 import { COLORS } from 'styles/themes'
@@ -34,12 +36,15 @@ const Cell: FC<Props> = (props) => {
   ])
 
   const calculateCellWidth = useMemo((): number => {
+    const margin = isPortrait
+      ? TABLE_MARGIN_HORIZONTAL * 2
+      : SAFE_AREA_PORTRAIT_WIDTH
     if (numberOfColumns <= CELL_MIN_COLUMNS) {
-      return screenWidth / numberOfColumns
+      return (screenWidth - margin) / numberOfColumns
     } else if (isPortrait) {
-      return screenWidth * CELL_PORTRAIT_MULTIPLIER
+      return (screenWidth - margin) * CELL_PORTRAIT_MULTIPLIER
     } else {
-      return screenWidth * CELL_LANDSCAPE_MULTIPLIER
+      return (screenWidth - margin) * CELL_LANDSCAPE_MULTIPLIER
     }
   }, [isPortrait, numberOfColumns, screenWidth])
 
@@ -55,7 +60,7 @@ const Cell: FC<Props> = (props) => {
 
   return (
     <View style={containerStyles}>
-      <Text numberOfLines={2} style={labelStyles}>
+      <Text numberOfLines={10} style={labelStyles}>
         {label}
       </Text>
     </View>
@@ -66,8 +71,6 @@ const styles = StyleSheet.create({
   container: {
     borderRightColor: COLORS?.mineShaft,
     borderRightWidth: StyleSheet.hairlineWidth,
-    flex: 1,
-    justifyContent: 'flex-start',
   },
   label: {
     color: COLORS?.mineShaft,

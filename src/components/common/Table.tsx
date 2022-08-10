@@ -1,25 +1,26 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactElement } from 'react'
 import {
+  FlatList,
   ScrollView,
   StyleSheet,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native'
 
 import Row from './Row'
-import { CELL_MIN_COLUMNS } from '@constants/cell'
-import User from '@customtypes/user'
+import { CELL_MIN_COLUMNS, TABLE_MARGIN_HORIZONTAL } from '@constants/cell'
+import { TableData } from '@customtypes/row'
 import { COLORS } from '@themes'
 
 interface Props {
-  data: User[]
+  data: TableData[]
   cellContainerStyle?: ViewStyle
   cellLabelStyle?: TextStyle
   rowContainerStyle?: ViewStyle
   tableContainerStyle?: ViewStyle
-  children?: ReactNode
 }
+
+const keyExtractor = (item: TableData, index: number): string => `${index}`
 
 const Table: FC<Props> = (props) => {
   const {
@@ -28,51 +29,65 @@ const Table: FC<Props> = (props) => {
     cellLabelStyle = {},
     rowContainerStyle = {},
     tableContainerStyle = {},
-    children,
   } = props
 
   const numberOfColumns = Object.keys(data?.[0] ?? [])?.length
 
   const containerStyles: ViewStyle = StyleSheet.flatten([
-    {},
-    numberOfColumns <= CELL_MIN_COLUMNS && styles.container,
+    styles.container,
+    numberOfColumns <= CELL_MIN_COLUMNS && { width: '100%' },
   ])
 
   const tableStyles: ViewStyle = StyleSheet.flatten([
     styles.table,
     tableContainerStyle,
+    numberOfColumns <= CELL_MIN_COLUMNS && { flex: 1 },
   ])
 
+  if (!data?.length) {
+    return null
+  }
+
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: TableData
+    index: number
+  }): ReactElement => {
+    return (
+      <Row
+        cellContainerStyle={cellContainerStyle}
+        cellLabelStyle={cellLabelStyle}
+        data={item}
+        isHeader={!index}
+        rowContainerStyle={rowContainerStyle}
+      />
+    )
+  }
+
   return (
-    <ScrollView contentContainerStyle={containerStyles} horizontal={true}>
-      <View style={tableStyles}>
-        {children}
-        {data?.map((user: User) => {
-          return (
-            <Row
-              key={user.name}
-              cellContainerStyle={cellContainerStyle}
-              cellLabelStyle={cellLabelStyle}
-              data={user}
-              isHeader={false}
-              rowContainerStyle={rowContainerStyle}
-            />
-          )
-        })}
-      </View>
+    <ScrollView horizontal nestedScrollEnabled>
+      <FlatList
+        contentContainerStyle={containerStyles}
+        data={data}
+        extraData={data}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        scrollEventThrottle={16}
+        style={tableStyles}
+      />
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-  },
-  table: {
     borderColor: COLORS?.mineShaft,
     borderWidth: 1,
-    flex: 1,
-    marginHorizontal: 20,
+  },
+  table: {
+    marginHorizontal: TABLE_MARGIN_HORIZONTAL,
   },
 })
 
