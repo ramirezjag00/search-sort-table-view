@@ -1,5 +1,9 @@
+import User from './user'
+
 interface RowData {
   [key: string]: string | number
 }
 
-export default RowData
+type TableData = User | RowData
+
+export { RowData, TableData }
