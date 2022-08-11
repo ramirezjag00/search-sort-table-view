@@ -42,7 +42,6 @@ const Search: FC<Props> = (props) => {
         selectionColor={COLORS?.vistaBlue}
         style={inputStyles}
         underlineColorAndroid="transparent"
-        value={value}
       />
       {!!value.length && (
         <TouchableOpacity onPress={onClearForm} style={styles.close}>
