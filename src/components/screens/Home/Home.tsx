@@ -1,44 +1,46 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
 
+import lodashDebounce from 'lodash/debounce'
+
 import Search from './components/Search'
-import ApiClient from '@api/apiClient'
+import Row from '@common/Row'
 import Table from '@common/Table'
-import { TableData } from '@customtypes/row'
+import EMPTY_USER_TABLE_DATA from '@constants/table'
+import useFilteredEntity from '@hooks/useFilteredEntity'
+import useGetUsers from '@hooks/useGetUsers'
+import useSortEntity from '@hooks/useSortEntity'
 import { COLORS } from '@themes'
 import getTableHeaders from '@utils/table'
 
 const Home: FC = () => {
-  const [users, setUsers] = useState<TableData[]>([])
   const [searchTerm, setSearchTerm] = useState<string>('')
-
-  const onChangeSearchInput = (input: string): void => setSearchTerm(input)
-
-  const isFetchingAllowed = !users?.length
-
-  const getUsers = useCallback(async () => {
-    if (isFetchingAllowed) {
-      const result = await ApiClient.fetchUsers()
-      if (result.length) {
-        const headers = getTableHeaders(result[0])
-        setUsers([headers, ...result])
-      }
-    }
-  }, [isFetchingAllowed])
-
-  useEffect(() => {
-    getUsers()
-  }, [getUsers])
+  const users = useGetUsers()
+  const filteredData = useFilteredEntity(searchTerm, users)
+  const { data, onPressColumn, sortingSymbols } = useSortEntity(filteredData)
+  const [onDebounceSearchText] = useState(() =>
+    lodashDebounce((input: string): void => setSearchTerm(input), 300),
+  )
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>USER TABLE</Text>
       <Search
-        onChangeText={onChangeSearchInput}
+        onChangeText={onDebounceSearchText}
         placeholder="Search for name or age"
         value={searchTerm}
       />
-      <Table data={users} />
+      <Table data={data}>
+        <Row
+          data={
+            data?.length > 1
+              ? getTableHeaders(data[0], true, sortingSymbols)
+              : getTableHeaders(EMPTY_USER_TABLE_DATA)
+          }
+          isHeader={true}
+          onPressCell={onPressColumn}
+        />
+      </Table>
     </SafeAreaView>
   )
 }
