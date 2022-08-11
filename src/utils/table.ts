@@ -1,10 +1,20 @@
 import capitalize from './strings'
-import { RowData } from '@customtypes/row'
+import { TableData } from '@customtypes/row'
 
-const getTableHeaders = (rowData: RowData): RowData => {
-  const newHeaders: RowData = {}
+const getTableHeaders = (
+  rowData: TableData,
+  isSortingHeader = false,
+  sortingSymbols: TableData = {},
+): TableData => {
+  const newHeaders: TableData = {}
   Object.keys(rowData).forEach((item, idx) => {
-    newHeaders[idx] = capitalize(item)
+    if (isSortingHeader) {
+      newHeaders[idx] = `${capitalize(item)} ${
+        sortingSymbols[item as keyof TableData]
+      }`
+    } else {
+      newHeaders[idx] = capitalize(item)
+    }
   })
 
   return newHeaders
