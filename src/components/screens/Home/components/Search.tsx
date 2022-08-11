@@ -14,10 +14,11 @@ import { COLORS } from '@themes'
 interface Props {
   value: string
   onChangeText: (input: string) => void
+  placeholder: string
 }
 
 const Search: FC<Props> = (props) => {
-  const { value, onChangeText } = props
+  const { value, onChangeText, placeholder } = props
   const onClearForm = (): void => onChangeText('')
   const inputRef = useRef<TextInput>(null)
   const inputStyles = StyleSheet.flatten([
@@ -35,7 +36,7 @@ const Search: FC<Props> = (props) => {
         defaultValue={value}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
-        placeholder="Search for name or age"
+        placeholder={placeholder}
         placeholderTextColor={COLORS?.silverChalice}
         returnKeyType="search"
         selectionColor={COLORS?.vistaBlue}

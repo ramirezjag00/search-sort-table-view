@@ -33,7 +33,11 @@ const Home: FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>USER TABLE</Text>
-      <Search onChangeText={onChangeSearchInput} value={searchTerm} />
+      <Search
+        onChangeText={onChangeSearchInput}
+        placeholder="Search for name or age"
+        value={searchTerm}
+      />
       <Table data={users} />
     </SafeAreaView>
   )
