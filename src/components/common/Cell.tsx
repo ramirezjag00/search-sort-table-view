@@ -1,5 +1,11 @@
 import { memo, FC, useMemo } from 'react'
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native'
 
 import {
   CELL_LANDSCAPE_MULTIPLIER,
@@ -17,6 +23,7 @@ interface Props {
   containerStyle?: ViewStyle
   labelStyle?: TextStyle
   numberOfColumns?: number
+  onPress?: () => void
 }
 
 const Cell: FC<Props> = (props) => {
@@ -27,6 +34,7 @@ const Cell: FC<Props> = (props) => {
     containerStyle = {},
     labelStyle = {},
     numberOfColumns = 0,
+    onPress,
   } = props
 
   const containerStyles: ViewStyle = StyleSheet.flatten([
@@ -59,11 +67,15 @@ const Cell: FC<Props> = (props) => {
   ])
 
   return (
-    <View style={containerStyles}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      disabled={!isHeader}
+      onPress={onPress}
+      style={containerStyles}>
       <Text numberOfLines={10} style={labelStyles}>
         {label}
       </Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
