@@ -27,6 +27,8 @@
     "yarn": ">=1.22.17 <= 1.99.99"
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.orderby": "^4.6.0",
     "react": "18.0.0",
     "react-native": "0.69.1"
   },
@@ -37,6 +39,8 @@
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.23",
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/lodash.orderby": "^4.6.7",
     "@types/react-native": "^0.69.1",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
