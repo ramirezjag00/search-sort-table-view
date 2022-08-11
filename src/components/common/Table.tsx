@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import { FC, Fragment, ReactElement, ReactNode } from 'react'
 import {
   FlatList,
   ScrollView,
@@ -18,9 +18,10 @@ interface Props {
   cellLabelStyle?: TextStyle
   rowContainerStyle?: ViewStyle
   tableContainerStyle?: ViewStyle
+  children?: ReactNode | ReactElement
 }
 
-const keyExtractor = (item: TableData, index: number): string => `${index}`
+const keyExtractor = (_item: TableData, index: number): string => `${index}`
 
 const Table: FC<Props> = (props) => {
   const {
@@ -29,6 +30,7 @@ const Table: FC<Props> = (props) => {
     cellLabelStyle = {},
     rowContainerStyle = {},
     tableContainerStyle = {},
+    children,
   } = props
 
   const numberOfColumns = Object.keys(data?.[0] ?? [])?.length
@@ -48,33 +50,31 @@ const Table: FC<Props> = (props) => {
     return null
   }
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: TableData
-    index: number
-  }): ReactElement => {
+  const renderItem = ({ item }: { item: TableData }): ReactElement => {
     return (
       <Row
         cellContainerStyle={cellContainerStyle}
         cellLabelStyle={cellLabelStyle}
         data={item}
-        isHeader={!index}
+        isHeader={false}
         rowContainerStyle={rowContainerStyle}
       />
     )
   }
 
+  const displayHeader = () => <Fragment>{children}</Fragment>
+
   return (
     <ScrollView horizontal nestedScrollEnabled>
       <FlatList
+        ListHeaderComponent={displayHeader}
         contentContainerStyle={containerStyles}
         data={data}
         extraData={data}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         scrollEventThrottle={16}
+        stickyHeaderIndices={[0]}
         style={tableStyles}
       />
     </ScrollView>
