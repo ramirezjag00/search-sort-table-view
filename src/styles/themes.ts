@@ -8,9 +8,11 @@ import type {
 
 // naming convention using vs-code extension: "Name that color"
 const COLORS: ColorsInterface = {
-  white: '#ffffff',
-  wildSand: '#f7f7f7',
   mineShaft: '#202020',
+  silverChalice: '#a7a7a7',
+  wildSand: '#f7f7f7',
+  white: '#ffffff',
+  vistaBlue: '#90DABF,',
 }
 
 const CONTAINERS: StyleSheetInterface = StyleSheet.create({
