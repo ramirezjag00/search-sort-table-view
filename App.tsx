@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { DeviceContextProvider } from '@contexts/DeviceContext'
-import Home from '@screens/Home'
+import Home from '@screens/Home/Home'
 
 const App: FC = () => {
   return (
