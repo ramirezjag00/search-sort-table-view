@@ -1,4 +1,4 @@
-# React Native TS Template
+# search-sort-table-view
 > Generated using [ramirezjag00/react-native-ts-template](https://github.com/ramirezjag00/react-native-ts-template)
 
 ## To run
@@ -122,6 +122,50 @@ bundle update fastlane
   └── 📁 utils
       └── 📁 hooks
   ```
-<details>
+</details>
 
 ---
+
+### Tech Stack
+- React Native
+- Typescript
+- Lodash
+  - debounce
+  - orderby
+
+### Tasks
+- [x]  As a user I should be able to see users data in a table format using the given mock data
+    - [x]  create a table-list list (looks like an excel sheet)
+- [x]  As a user I should be able to search users table
+    - [x]  add debouncing mechanism for the search
+- [x]  As a user I should be able to sort users table by name or age
+    - [x]  should be future proof to have it work with any generic array of data (see Test Data Section)
+- [ ]  As a user I should be able to see previously fetched/cached data
+    - [ ]  store Data in Async Storage
+    - [ ]  fetch data once per hour
+        - [ ]  cache first
+    - [ ]  write a few tests to make sure your caching mechanism works as intended
+
+
+---
+
+<details>
+<summary>Why? 🤔</summary>
+
+- Tables can be done with native table/grid in ios/android or there are libraries for generating tables like the ff but these libs requires you to reshape your data to arrays of column values in a table:
+  - GeekyAnts / react-native-easy-grid
+  - Gil2015 / react-native-table-component
+  - callstack/react-native-paper
+- But I like making my own tools so, I made these components and features with just a few dependencies like lodash (debounce & orderby) and will work on any data w/o reshaping
+- Initially, I went with ScrollView and .map for horizontal/vertical scrolling of the table but I was thinking of the performance eventually, so I tried @shopify/flash-list. While that worked on my demo project for a section-list, it lacks a lot of props I need for a Table. Lastly, I migrated everything to the same old FlatList. Those 3 experiments took some time to implement, especially bec. I need the Cell Component to calculate itself to maximize the screen depending on the orientation of the device. 😂
+- For the search and sort, while there's Fuse.js or just using ReduxToolKit will make these features easier, I tried using asyncFilter and lodash's orderby and debounce -- it worked well after adding new key-value pairs for the test data
+</details>
+
+---
+
+### How to add test data? 🧐
+- Uncomment lines after TODO in the files from the image
+- Table, Row, Cell Components and search & sorting will still work even after adding key-value pairs
+- Try rotating device to portrait/landscape
+ 
+<img src="./assets/test_data.png" width="700" />
