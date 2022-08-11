@@ -11,6 +11,7 @@ interface Props {
   cellContainerStyle?: ViewStyle
   cellLabelStyle?: TextStyle
   rowContainerStyle?: ViewStyle
+  onPressCell?: (column: string | number) => void
 }
 
 const keyExtractor = (item: string, index: number): string => `${item}-${index}`
@@ -22,6 +23,7 @@ const Row: FC<Props> = (props) => {
     cellContainerStyle = {},
     cellLabelStyle = {},
     rowContainerStyle = {},
+    onPressCell = () => null,
   } = props
 
   const columns = Object.keys(data)
@@ -31,13 +33,17 @@ const Row: FC<Props> = (props) => {
   ])
 
   const renderItem = ({ item }: { item: string }): ReactElement => {
+    const label = data[item as keyof TableData]
+    const onPress = () => onPressCell(label)
+
     return (
       <Cell
         containerStyle={cellContainerStyle}
         isHeader={isHeader}
-        label={data[item as keyof TableData]}
+        label={label}
         labelStyle={cellLabelStyle}
         numberOfColumns={columns?.length}
+        onPress={onPress}
       />
     )
   }
