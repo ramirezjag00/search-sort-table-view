@@ -1,14 +1,18 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
 
+import Search from './components/Search'
 import ApiClient from '@api/apiClient'
 import Table from '@common/Table'
-import { TableData, RowData } from '@customtypes/row'
+import { TableData } from '@customtypes/row'
 import { COLORS } from '@themes'
-import capitalize from '@utils/strings'
+import getTableHeaders from '@utils/table'
 
 const Home: FC = () => {
   const [users, setUsers] = useState<TableData[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
+  const onChangeSearchInput = (input: string): void => setSearchTerm(input)
 
   const isFetchingAllowed = !users?.length
 
@@ -16,11 +20,8 @@ const Home: FC = () => {
     if (isFetchingAllowed) {
       const result = await ApiClient.fetchUsers()
       if (result.length) {
-        const newHeaders: RowData = {}
-        Object.keys(result[0]).forEach((item, idx) => {
-          newHeaders[idx] = capitalize(item)
-        })
-        setUsers([newHeaders, ...result])
+        const headers = getTableHeaders(result[0])
+        setUsers([headers, ...result])
       }
     }
   }, [isFetchingAllowed])
@@ -32,6 +33,7 @@ const Home: FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>USER TABLE</Text>
+      <Search onChangeText={onChangeSearchInput} value={searchTerm} />
       <Table data={users} />
     </SafeAreaView>
   )
