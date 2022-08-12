@@ -19,6 +19,8 @@ interface Props {
   rowContainerStyle?: ViewStyle
   tableContainerStyle?: ViewStyle
   children?: ReactNode | ReactElement
+  onRefresh: () => void
+  refreshing: boolean
 }
 
 const keyExtractor = (_item: TableData, index: number): string => `${index}`
@@ -31,6 +33,8 @@ const Table: FC<Props> = (props) => {
     rowContainerStyle = {},
     tableContainerStyle = {},
     children,
+    onRefresh,
+    refreshing,
   } = props
 
   const numberOfColumns = Object.keys(data?.[0] ?? [])?.length
@@ -72,6 +76,8 @@ const Table: FC<Props> = (props) => {
         data={data}
         extraData={data}
         keyExtractor={keyExtractor}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
         renderItem={renderItem}
         scrollEventThrottle={16}
         stickyHeaderIndices={[0]}
