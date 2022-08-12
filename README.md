@@ -163,9 +163,9 @@ bundle update fastlane
   - But I like making my own tools so, I made these components and features with just a few dependencies like lodash (debounce & orderby) and will work on any data w/o reshaping
   - Initially, I went with ScrollView and .map for horizontal/vertical scrolling of the table but I was thinking of the performance eventually, so I tried @shopify/flash-list. While that worked on my demo project for a section-list, it lacks a lot of props I need for a Table. Lastly, I migrated everything to the same old FlatList. Those 3 experiments took some time to implement, especially bec. I need the Cell Component to calculate itself to maximize the screen depending on the orientation of the device. 😂
 - Day 2
-  - For the search and sort, while there's Fuse.js or just using ReduxToolKit will make these features easier, I tried using asyncFilter and lodash's orderby and debounce -- it worked well after adding new key-value pairs for the test data but performance can still be improved (see Issues Tab of repo)
+  - For the search and sort, while there's Fuse.js or just using ReduxToolKit, will make these features easier. I tried using asyncFilter and lodash's orderby and debounce -- it worked well even after adding new key-value pairs for the test data but performance can still be improved (see Issues Tab of repo)
 - Day 3
-  - Caching and fetching conditions could've been easier and faster to build with Redux-ToolKit, RTK-Query and a faster storage which is MMKV however, I was still able to pull it off (hooks + Async Storage + dayjs) and add in another feature which is pull to refresh
+  - Caching and fetching conditions could've been faster to build and much organized with Redux-ToolKit, RTK-Query and a faster storage like MMKV, but still, I was able to pull it off (hooks + Async Storage + dayjs) and add in another Table feature which is pull to refresh
 </details>
 
 ---
