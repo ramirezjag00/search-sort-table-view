@@ -15,7 +15,7 @@ import getTableHeaders from '@utils/table'
 
 const Home: FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const users = useGetUsers()
+  const { users, getUsers, isFetchingUsers } = useGetUsers()
   const filteredData = useFilteredEntity(searchTerm, users)
   const { data, onPressColumn, sortingSymbols } = useSortEntity(filteredData)
   const [onDebounceSearchText] = useState(() =>
@@ -30,7 +30,7 @@ const Home: FC = () => {
         placeholder="Search for name or age"
         value={searchTerm}
       />
-      <Table data={data}>
+      <Table data={data} onRefresh={getUsers} refreshing={isFetchingUsers}>
         <Row
           data={
             data?.length > 1
