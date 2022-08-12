@@ -27,6 +27,8 @@
     "yarn": ">=1.22.17 <= 1.99.99"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.9",
+    "dayjs": "^1.11.5",
     "lodash.debounce": "^4.0.8",
     "lodash.orderby": "^4.6.0",
     "react": "18.0.0",
