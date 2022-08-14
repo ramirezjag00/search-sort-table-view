@@ -47,6 +47,7 @@ const Home: FC = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: COLORS?.white,
     flex: 1,
   },
   title: {
