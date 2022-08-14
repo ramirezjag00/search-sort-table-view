@@ -5,6 +5,6 @@ extend(isSameOrAfter)
 
 const today = () => dayjs().format()
 const hasOneHourPassed = (date: string): boolean =>
-  dayjs().isSameOrAfter(dayjs(date).add(1, 'minute'))
+  dayjs().isSameOrAfter(dayjs(date).add(1, 'hour'))
 
 export { today, hasOneHourPassed }
