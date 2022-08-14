@@ -1,5 +1,6 @@
 import { memo, FC, useMemo } from 'react'
 import {
+  Platform,
   StyleSheet,
   Text,
   TextStyle,
@@ -82,7 +83,14 @@ const Cell: FC<Props> = (props) => {
 const styles = StyleSheet.create({
   container: {
     borderRightColor: COLORS?.mineShaft,
-    borderRightWidth: StyleSheet.hairlineWidth,
+    ...Platform.select({
+      ios: {
+        borderRightWidth: StyleSheet.hairlineWidth,
+      },
+      android: {
+        borderRightWidth: 0.5,
+      },
+    }),
   },
   label: {
     color: COLORS?.mineShaft,

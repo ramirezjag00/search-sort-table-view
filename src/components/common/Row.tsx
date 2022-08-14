@@ -1,5 +1,12 @@
 import { FC, ReactElement } from 'react'
-import { FlatList, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native'
 
 import Cell from './Cell'
 import { TableData } from '@customtypes/row'
@@ -65,7 +72,14 @@ const Row: FC<Props> = (props) => {
 const styles = StyleSheet.create({
   row: {
     borderBottomColor: COLORS?.mineShaft,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
+      android: {
+        borderBottomWidth: 1,
+      },
+    }),
   },
 })
 
