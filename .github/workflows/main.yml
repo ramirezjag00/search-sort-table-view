@@ -23,3 +23,6 @@ jobs:
 
       - name: Run eslint check
         run: npm run lint
+
+      - name: Run tests
+        run: npm run test
