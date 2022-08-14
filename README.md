@@ -148,6 +148,10 @@ bundle update fastlane
   - jest v28.1.3
   - react-test-renderer v18
   - @testing-library/react-native v11
+- github action
+  - eslint check
+  - run tests
+- fastlane (initialized)
 
 ### Tasks
 - [x]  As a user I should be able to see users data in a table format using the given mock data
