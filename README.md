@@ -126,6 +126,14 @@ bundle update fastlane
 
 ---
 
+## APK [HERE](https://drive.google.com/file/d/1gkE72g7lc0RoNXYLEFSNe2JYXNTmdjdr/view?usp=sharing)
+
+### PORTRAIT GIF
+<img src="./assets/usersTable.gif" width="500" />
+
+### LANDSCAPE PNG
+<img src="./assets/usersTable_landscape.png" width="700" />
+
 ### Tech Stack
 - React Native
 - Typescript
@@ -133,7 +141,13 @@ bundle update fastlane
   - debounce
   - orderby
 - AsyncStorage
-- dayjs
+- dates
+  - dayjs
+  - mockdate 3.0.5
+- testing
+  - jest v28.1.3
+  - react-test-renderer v18
+  - @testing-library/react-native v11
 
 ### Tasks
 - [x]  As a user I should be able to see users data in a table format using the given mock data
@@ -147,7 +161,7 @@ bundle update fastlane
     - [x]  store data in Async Storage
     - [x]  cache first and only fetch data once per hour
         - [x]  fetch data again if cache is empty
-    - [ ]  write a few tests to make sure your caching mechanism works as intended
+    - [x]  write a few tests to make sure your caching mechanism works as intended
 
 
 ---
@@ -166,6 +180,8 @@ bundle update fastlane
   - For the search and sort, while there's Fuse.js or just using ReduxToolKit, will make these features easier. I tried using asyncFilter and lodash's orderby and debounce -- it worked well even after adding new key-value pairs for the test data but performance can still be improved (see Issues Tab of repo)
 - Day 3
   - Caching and fetching conditions could've been faster to build and much organized with Redux-ToolKit, RTK-Query and a faster storage like MMKV, but still, I was able to pull it off (hooks + Async Storage + dayjs) and add in another Table feature which is pull to refresh
+- Day 4
+  - Since async storage supports tests with jest and with the help of dayjs + mockdate + RNTL's renderhook, writing tests for the caching mechanism was straightforward. I guess the only challenge here was with the act errors, where you need to read the new jest.useFakeTimers in jest v11 (set up in jest in package.json to use it globally and legacy) and understand how await waitFor(() => ...) works.
 </details>
 
 ---
