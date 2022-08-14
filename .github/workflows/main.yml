@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  eslint-check:
+  eslint-check-and-tests:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
